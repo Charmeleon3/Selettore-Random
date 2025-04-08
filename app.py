@@ -2,21 +2,20 @@ import streamlit as st
 import random
 import os
 
-# Titolo app
-st.title("🎲 Selettore di immagini locali")
+st.title("🎲 Selettore di immagini")
 
-# Percorso alla cartella con le immagini
-IMAGES_FOLDER = "C:\\Users\\LucarioNervi\\Desktop\\progetto\\immagini"
+IMAGES_FOLDER = "immagini"
 
-# Carica la lista di immagini all'avvio
+# Verifica se la cartella esiste
 if 'pool' not in st.session_state:
-    immagini = [os.path.join(IMAGES_FOLDER, f) for f in os.listdir(IMAGES_FOLDER) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
-    st.session_state.pool = immagini.copy()
+    if not os.path.exists(IMAGES_FOLDER):
+        st.error(f"La cartella '{IMAGES_FOLDER}' non è stata trovata. Verifica che sia presente nella root del repo.")
+    else:
+        immagini = [os.path.join(IMAGES_FOLDER, f) for f in os.listdir(IMAGES_FOLDER) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
+        st.session_state.pool = immagini.copy()
 
-# Mostra quante immagini restano
 st.write(f"Immagini rimanenti: {len(st.session_state.pool)}")
 
-# Bottone per estrarre
 if st.button("Estrai immagine"):
     if st.session_state.pool:
         scelta = random.choice(st.session_state.pool)
@@ -25,7 +24,6 @@ if st.button("Estrai immagine"):
     else:
         st.warning("Hai esaurito le immagini!")
 
-# Bottone per reset
 if st.button("Reset pool"):
     immagini = [os.path.join(IMAGES_FOLDER, f) for f in os.listdir(IMAGES_FOLDER) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
     st.session_state.pool = immagini.copy()
