@@ -6,7 +6,7 @@ import os
 st.title("🎲 Selettore di immagini locali")
 
 # Percorso alla cartella con le immagini
-IMAGES_FOLDER = "C:\\Users\\LucarioNervi\\Desktop\\progetto\\immagini"
+IMAGES_FOLDER = "immagini"
 
 # Carica la lista di immagini all'avvio
 if 'pool' not in st.session_state:
